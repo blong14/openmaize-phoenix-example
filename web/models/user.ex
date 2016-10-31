@@ -1,7 +1,7 @@
 defmodule Welcome.User do
   use Welcome.Web, :model
 
-  alias Welcome.OpenmaizeEcto
+  alias Openmaize.Database, as: DB
 
   schema "users" do
     field :username, :string
@@ -30,13 +30,13 @@ defmodule Welcome.User do
   def auth_changeset(struct, params, key) do
     struct
     |> changeset(params)
-    |> OpenmaizeEcto.add_password_hash(params)
-    |> OpenmaizeEcto.add_confirm_token(key)
+    |> DB.add_password_hash(params)
+    |> DB.add_confirm_token(key)
   end
 
   def reset_changeset(struct, params, key) do
     struct
     |> cast(params, [:email], [])
-    |> OpenmaizeEcto.add_reset_token(key)
+    |> DB.add_reset_token(key)
   end
 end

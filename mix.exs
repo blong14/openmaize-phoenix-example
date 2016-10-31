@@ -3,7 +3,7 @@ defmodule Welcome.Mixfile do
 
   def project do
     [app: :welcome,
-     version: "2.1.0",
+     version: "2.2.0",
      elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
@@ -36,7 +36,7 @@ defmodule Welcome.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:openmaize, "~> 2.1"},
+     {:openmaize, "~> 2.2"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"}]
   end
