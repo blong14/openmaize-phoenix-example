@@ -17,6 +17,20 @@ config :welcome, Welcome.Endpoint,
   pubsub: [name: Welcome.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Configures mailer
+# change the following configuration with the configuration recommended by
+# your provider.
+# It is recommended to use environment variables for username and password.
+config :welcome, Welcome.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: "smtp.domain",
+  port: 1025,
+  username: "username",
+  password: "password",
+  tls: :if_available, # can be `:always` or `:never`
+  ssl: false, # can be `true`
+  retries: 1
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
