@@ -2,10 +2,6 @@ defmodule Welcome.SessionController do
   use Welcome.Web, :controller
 
   import Welcome.Authorize
-  alias Welcome.Mailer
-
-  plug Openmaize.ConfirmEmail,
-    [mail_function: &Mailer.receipt_confirm/1] when action in [:confirm_email]
 
   plug Openmaize.Login when action in [:create]
   #plug Openmaize.Login, [unique_id: :email] when action in [:create]
@@ -25,12 +21,5 @@ defmodule Welcome.SessionController do
   def delete(conn, _params) do
     configure_session(conn, drop: true)
     |> auth_info("You have been logged out", page_path(conn, :index))
-  end
-
-  def confirm_email(%Plug.Conn{private: %{openmaize_error: message}} = conn, _params) do
-    auth_error conn, message, session_path(conn, :new)
-  end
-  def confirm_email(%Plug.Conn{private: %{openmaize_info: message}} = conn, _params) do
-    auth_info conn, message, session_path(conn, :new)
   end
 end

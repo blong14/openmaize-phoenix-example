@@ -2,17 +2,17 @@ defmodule Welcome.UserControllerTest do
   use Welcome.ConnCase
 
   import Welcome.TestHelpers
-  alias Welcome.User
+  alias Welcome.{Repo, User}
 
   @valid_attrs %{username: "bill", email: "bill@mail.com", password: "^hEsdg*F899"}
-  @invalid_attrs %{email: "albert@mail.com", password: "password"}
+  @invalid_attrs %{email: "", password: ""}
 
   setup %{conn: conn} = config do
     conn = conn |> bypass_through(Welcome.Router, :browser) |> get("/")
 
     if username = config[:login] do
-      user = add_user_confirmed(username)
-      other = add_user_confirmed("tony")
+      user = add_user(username)
+      other = add_user("tony")
 
       conn = conn |> put_session(:user_id, user.id) |> send_resp(:ok, "/")
       {:ok, %{conn: conn, user: user, other: other}}
