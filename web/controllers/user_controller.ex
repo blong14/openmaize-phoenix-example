@@ -2,7 +2,8 @@ defmodule Welcome.UserController do
   use Welcome.Web, :controller
 
   import Welcome.Authorize
-  alias Welcome.User
+  alias Welcome.{Mailer, User}
+  alias Openmaize.ConfirmEmail
 
   plug :user_check when action in [:index, :show]
   plug :id_check when action in [:edit, :update, :delete]
@@ -17,11 +18,13 @@ defmodule Welcome.UserController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    changeset = User.auth_changeset(%User{}, user_params) # use auth_changeset/3
+  def create(conn, %{"user" => %{"email" => email} = user_params}) do
+    {key, link} = ConfirmEmail.gen_token_link(email)
+    changeset = User.auth_changeset(%User{}, user_params, key)
 
     case Repo.insert(changeset) do
       {:ok, _user} ->
+        Mailer.ask_confirm(email, link)
         auth_info conn, "User created successfully", user_path(conn, :index)
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)

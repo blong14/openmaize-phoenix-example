@@ -17,5 +17,7 @@ defmodule Welcome.Router do
 
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    get "/sessions/confirm_email", SessionController, :confirm_email
+    resources "/password_resets", PasswordResetController, only: [:new, :create, :edit, :update]
   end
 end

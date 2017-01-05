@@ -12,7 +12,7 @@ config :welcome,
 # Configures the endpoint
 config :welcome, Welcome.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "JET/w8WteREBCQdKQrfyLUmyGd0M+jttQlQ7m/2EOIsGB6KFrU0xPEEj+C5cLLWn",
+  secret_key_base: "VXivFMoBSoof6KPWguzR110xY74ZGR22r9zt9A8KZjE6V4tDaRllmFxEemdBbMQ6",
   render_errors: [view: Welcome.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Welcome.PubSub,
            adapter: Phoenix.PubSub.PG2]
