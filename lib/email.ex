@@ -14,7 +14,7 @@ defmodule Welcome.Email do
   An email with a confirmation link in it.
   """
   def ask_confirm(email, link) do
-    new_email
+    new_email()
     |> to(email)
     |> from("welcome@example.com")
     |> subject("Confirm your account - Welcome Example")
@@ -25,7 +25,7 @@ defmodule Welcome.Email do
   An with a link to reset the password.
   """
   def ask_reset(email, link) do
-    new_email
+    new_email()
     |> to(email)
     |> from("welcome@example.com")
     |> subject("Reset your password - Welcome Example")
@@ -36,7 +36,7 @@ defmodule Welcome.Email do
   An email acknowledging that the account has been successfully confirmed.
   """
   def receipt_confirm(email) do
-    new_email
+    new_email()
     |> to(email)
     |> from("welcome@example.com")
     |> subject("Confirmed account - Welcome Example")

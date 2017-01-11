@@ -24,7 +24,7 @@ defmodule Welcome.UserController do
 
     case Repo.insert(changeset) do
       {:ok, _user} ->
-        Email.ask_confirm(email, link)
+        Email.ask_confirm(email, link) |> Mailer.deliver_now
         auth_info conn, "User created successfully", user_path(conn, :index)
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
