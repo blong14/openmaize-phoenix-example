@@ -2,10 +2,10 @@ defmodule Welcome.PasswordResetController do
   use Welcome.Web, :controller
 
   import Welcome.Authorize
-  alias Welcome.{Mailer, User}
+  alias Welcome.{Email, User}
 
   plug Openmaize.ResetPassword,
-    [mail_function: &Mailer.receipt_confirm/1] when action in [:update]
+    [mail_function: &Email.receipt_confirm/1] when action in [:update]
 
   def new(conn, _params) do
     render conn, "new.html"
@@ -17,7 +17,7 @@ defmodule Welcome.PasswordResetController do
 
     case Repo.update(changeset) do
       {:ok, _user} ->
-        Mailer.ask_reset(email, link)
+        Email.ask_reset(email, link) |> Mailer.deliver_now
         message = "Check your inbox for instructions on how to reset your password"
         auth_info conn, message, user_path(conn, :index)
       {:error, changeset} ->
