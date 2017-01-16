@@ -13,7 +13,6 @@ defmodule Welcome.PasswordResetControllerTest do
   setup %{conn: conn} do
     conn = conn |> bypass_through(Welcome.Router, :browser) |> get("/")
     user = add_reset("gladys")
-
     {:ok, %{conn: conn, user: user}}
   end
 
@@ -32,5 +31,4 @@ defmodule Welcome.PasswordResetControllerTest do
     conn = put(conn, password_reset_path(conn, :update, user), password_reset: @invalid_pass)
     assert conn.private.phoenix_flash["error"] =~ "password is too short"
   end
-
 end

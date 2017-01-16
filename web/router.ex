@@ -20,5 +20,4 @@ defmodule Welcome.Router do
     get "/sessions/confirm_email", SessionController, :confirm_email
     resources "/password_resets", PasswordResetController, only: [:new, :create, :edit, :update]
   end
-
 end

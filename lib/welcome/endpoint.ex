@@ -36,7 +36,7 @@ defmodule Welcome.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_welcome_key",
-    signing_salt: "+wURZONZ"
+    signing_salt: "1t0U8328"
 
   plug Welcome.Router
 end

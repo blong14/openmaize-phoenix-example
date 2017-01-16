@@ -1,6 +1,7 @@
 defmodule Welcome.TestHelpers do
 
   import Ecto.Changeset
+
   alias Welcome.{Repo, User}
 
   def add_user(username) do

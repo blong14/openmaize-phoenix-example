@@ -2,10 +2,10 @@ defmodule Welcome.UserControllerTest do
   use Welcome.ConnCase
 
   import Welcome.TestHelpers
-  alias Welcome.User
+  alias Welcome.{Repo, User}
 
   @valid_attrs %{username: "bill", email: "bill@mail.com", password: "^hEsdg*F899"}
-  @invalid_attrs %{email: "albert@mail.com", password: "password"}
+  @invalid_attrs %{email: "", password: ""}
 
   setup %{conn: conn} = config do
     conn = conn |> bypass_through(Welcome.Router, :browser) |> get("/")
@@ -75,7 +75,7 @@ defmodule Welcome.UserControllerTest do
   @tag login: "reg"
   test "PUT /users/:id with invalid data", %{conn: conn, user: user} do
     conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
-    assert redirected_to(conn) == user_path(conn, :show, user)
+    assert html_response(conn, 200)
   end
 
   @tag login: "reg"
