@@ -1,7 +1,9 @@
 defmodule Welcome.Email do
   use Bamboo.Phoenix, view: Welcome.EmailView
 
-  @docmodule """
+  alias Welcome.Mailer
+
+  @moduledoc """
   A module for sending emails
 
   Our emails can be sent as pure text, HTML or even as an application view, but
@@ -19,6 +21,7 @@ defmodule Welcome.Email do
     |> from("welcome@example.com")
     |> subject("Confirm your account - Welcome Example")
     |> text_body("Confirm your Welcome Example email here http://www.example.com/sessions/confirm?#{link}")
+    |> Mailer.deliver_now
   end
 
   @doc """
@@ -30,6 +33,7 @@ defmodule Welcome.Email do
     |> from("welcome@example.com")
     |> subject("Reset your password - Welcome Example")
     |> text_body("Reset your password at http://www.example.com/password_resets/edit?#{link}")
+    |> Mailer.deliver_now
   end
 
   @doc """
@@ -41,5 +45,6 @@ defmodule Welcome.Email do
     |> from("welcome@example.com")
     |> subject("Confirmed account - Welcome Example")
     |> text_body("Your account has been confirmed!")
+    |> Mailer.deliver_now
   end
 end
