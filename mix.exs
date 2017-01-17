@@ -19,7 +19,7 @@ defmodule Welcome.Mixfile do
   def application do
     [mod: {Welcome, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :openmaize]]
+                    :phoenix_ecto, :postgrex, :openmaize, :bamboo]]
   end
 
   # Specifies which paths to compile per environment.
@@ -34,11 +34,13 @@ defmodule Welcome.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:postgrex, ">= 0.0.0"},
-     {:openmaize, "~> 2.5"},
+     {:openmaize, "~> 2.7"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:bamboo, "~> 0.7"},
+     {:bamboo_smtp, "~> 1.2.1"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

@@ -2,10 +2,10 @@ defmodule Welcome.SessionController do
   use Welcome.Web, :controller
 
   import Welcome.Authorize
-  alias Welcome.Mailer
+  alias Welcome.Email
 
   plug Openmaize.ConfirmEmail,
-    [mail_function: &Mailer.receipt_confirm/1] when action in [:confirm_email]
+    [mail_function: &Email.receipt_confirm/1] when action in [:confirm_email]
 
   plug Openmaize.Login when action in [:create]
   #plug Openmaize.Login, [unique_id: :email] when action in [:create]

@@ -17,3 +17,7 @@ config :welcome, Welcome.Repo,
   database: "welcome_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Configures mailer for testing
+config :welcome, Welcome.Mailer,
+  adapter: Bamboo.TestAdapter

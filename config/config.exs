@@ -17,6 +17,17 @@ config :welcome, Welcome.Endpoint,
   pubsub: [name: Welcome.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Configures mailer
+config :welcome, Welcome.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: "smtp.domain",
+  port: 1025,
+  username: System.get_env("SMTP_USERNAME"),
+  password: System.get_env("SMTP_PASSWORD"),
+  tls: :if_available, # can be `:always` or `:never`
+  ssl: false, # can be `true`
+  retries: 1
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
