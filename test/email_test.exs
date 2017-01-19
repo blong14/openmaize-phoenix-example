@@ -11,7 +11,7 @@ defmodule Welcome.EmailTest do
   test "sends confirmation request email", %{email: email, link: link} do
     sent_email = Welcome.Email.ask_confirm(email, link)
     assert sent_email.subject =~ "Confirm your account"
-    assert sent_email.text_body =~ "confirm?email=fred%40mail.com&key="
+    assert sent_email.text_body =~ "confirm_email?email=fred%40mail.com&key="
     assert_delivered_email Welcome.Email.ask_confirm(email, link)
   end
 

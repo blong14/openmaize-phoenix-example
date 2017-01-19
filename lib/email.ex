@@ -20,7 +20,7 @@ defmodule Welcome.Email do
     |> to(email)
     |> from("welcome@example.com")
     |> subject("Confirm your account - Welcome Example")
-    |> text_body("Confirm your Welcome Example email here http://www.example.com/sessions/confirm?#{link}")
+    |> text_body("Confirm your Welcome Example email here http://www.example.com/sessions/confirm_email?#{link}")
     |> Mailer.deliver_now
   end
 
