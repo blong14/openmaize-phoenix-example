@@ -1,20 +1,23 @@
 # Welcome
 
-To start your Phoenix app:
+Example of using Openmaize authentication library in a Phoenix web application.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
+## Example apps
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+There are three branches in this repository, each of which has a different
+example of using Openmaize with Phoenix.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+The master and basic branches are examples of new Phoenix apps set up with Openmaize according
+to [this guide](https://github.com/riverrun/openmaize/wiki/Openmaize-with-a-new-phoenix-project).
 
-## Learn more
+* master - new Phoenix app after running `mix openmaize.phx --confirm` and adding an email module
+  * this has basic user authentication plus email confirmation and password resetting
+  * to use this app, you need to edit the `lib/welcome/mailer.ex` file, using an email library of your choice
+* basic - new Phoenix app after running `mix openmaize.phx`
+  * this has basic user authentication without any email confirmation
+* old_admin - an older version, but one with more features
+  * support for two-factor user authorization
+  * authorization based on user roles
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+See [this guide](https://github.com/riverrun/openmaize/blob/master/phoenix_new_openmaize.md)
+for more information about setting up a new app with Openmaize.
