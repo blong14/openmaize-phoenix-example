@@ -4,7 +4,7 @@ defmodule Welcome.UserControllerTest do
   import Welcome.TestHelpers
   alias Welcome.{Repo, User}
 
-  @valid_attrs %{username: "bill", email: "bill@mail.com", password: "^hEsdg*F899"}
+  @valid_attrs %{email: "bill@mail.com", username: "bill", password: "^hEsdg*F899"}
   @invalid_attrs %{email: "", password: ""}
 
   setup %{conn: conn} = config do

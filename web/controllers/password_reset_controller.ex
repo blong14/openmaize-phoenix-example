@@ -13,21 +13,14 @@ defmodule Welcome.PasswordResetController do
 
   def create(conn, %{"password_reset" => %{"email" => email} = user_params}) do
     {key, link} = Openmaize.ConfirmEmail.gen_token_link(email)
-    changeset = User.reset_changeset(Repo.get_by(User, email: email), user_params, key)
-
-    case Repo.update(changeset) do
-      {:ok, _user} ->
-        Email.ask_reset(email, link)
-        message = "Check your inbox for instructions on how to reset your password"
-        auth_info conn, message, user_path(conn, :index)
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
+    send_token(conn, Repo.get_by(User, email: email), user_params, {key, email, link})
   end
 
   def edit(conn, %{"email" => email, "key" => key}) do
-    user = Repo.get_by(User, email: email)
-    render conn, "edit.html", user: user, email: email, key: key
+    case Repo.get_by(User, email: email) do
+      nil -> render conn, "new.html"
+      user -> render conn, "edit.html", user: user, email: email, key: key
+    end
   end
 
   def update(%Plug.Conn{private: %{openmaize_error: message}} = conn,
@@ -38,5 +31,20 @@ defmodule Welcome.PasswordResetController do
   end
   def update(%Plug.Conn{private: %{openmaize_info: message}} = conn, _params) do
     configure_session(conn, drop: true) |> auth_info(message, session_path(conn, :new))
+  end
+
+  defp send_token(conn, nil, params, _) do
+    render conn, "new.html"
+  end
+  defp send_token(conn, user, user_params, {key, email, link}) do
+    changeset = User.reset_changeset(user, user_params, key)
+    case Repo.update(changeset) do
+      {:ok, _user} ->
+        Email.ask_reset(email, link)
+        message = "Check your inbox for instructions on how to reset your password"
+        auth_info conn, message, user_path(conn, :index)
+      {:error, _changeset} ->
+        render conn, "new.html"
+    end
   end
 end

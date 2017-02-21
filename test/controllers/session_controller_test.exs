@@ -3,8 +3,8 @@ defmodule Welcome.SessionControllerTest do
 
   import Welcome.TestHelpers
 
-  @valid_attrs %{username: "robin", password: "mangoes&g0oseberries"}
-  @invalid_attrs %{username: "robin", password: "maaaangoes&g00zeberries"}
+  @valid_attrs %{email: "robin@mail.com", password: "mangoes&g0oseberries"}
+  @invalid_attrs %{email: "robin@mail.com", password: "maaaangoes&g00zeberries"}
 
   setup %{conn: conn} do
     conn = conn |> bypass_through(Welcome.Router, :browser) |> get("/")
@@ -34,7 +34,7 @@ defmodule Welcome.SessionControllerTest do
     email = "arthur@mail.com"
     key = "pu9-VNdgE8V9qZo19rlcg3KUNjpxuixg"
     conn = get(conn, session_path(conn, :confirm_email, email: email, key: key))
-    assert conn.private.phoenix_flash["info"] =~ "successfully confirmed"
+    assert conn.private.phoenix_flash["info"] =~ "Account confirmed"
     assert redirected_to(conn) == session_path(conn, :new)
   end
 
@@ -42,7 +42,15 @@ defmodule Welcome.SessionControllerTest do
     email = "arthur@mail.com"
     key = "pu9-VNdgE8V9QzO19RLCG3KUNjpxuixg"
     conn = get(conn, session_path(conn, :confirm_email, email: email, key: key))
-    assert conn.private.phoenix_flash["error"] =~ "failed"
+    assert conn.private.phoenix_flash["error"] =~ "Invalid credentials"
+    assert redirected_to(conn) == session_path(conn, :new)
+  end
+
+  test "confirmation fails for incorrect email", %{conn: conn} do
+    email = "gerald@mail.com"
+    key = "pu9-VNdgE8V9qZo19rlcg3KUNjpxuixg"
+    conn = get(conn, session_path(conn, :confirm_email, email: email, key: key))
+    assert conn.private.phoenix_flash["error"] =~ "Invalid credentials"
     assert redirected_to(conn) == session_path(conn, :new)
   end
 end

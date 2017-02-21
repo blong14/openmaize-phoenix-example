@@ -4,8 +4,8 @@ defmodule Welcome.User do
   alias Openmaize.Database, as: DB
 
   schema "users" do
-    field :username, :string
     field :email, :string
+    field :username, :string
     field :password, :string, virtual: true
     field :password_hash, :string
     field :confirmed_at, Ecto.DateTime
@@ -22,9 +22,9 @@ defmodule Welcome.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:username, :email])
-    |> validate_required([:username, :email])
-    |> unique_constraint(:username)
+    |> cast(params, [:email, :username])
+    |> validate_required([:email, :username])
+    |> unique_constraint(:email)
   end
 
   def auth_changeset(struct, params, key) do

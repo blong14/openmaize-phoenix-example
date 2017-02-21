@@ -8,7 +8,6 @@ defmodule Welcome.SessionController do
     [mail_function: &Email.receipt_confirm/1] when action in [:confirm_email]
 
   plug Openmaize.Login when action in [:create]
-  #plug Openmaize.Login, [unique_id: :email] when action in [:create]
 
   def new(conn, _params) do
     render conn, "new.html"
