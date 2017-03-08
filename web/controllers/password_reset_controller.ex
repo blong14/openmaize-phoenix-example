@@ -17,23 +17,20 @@ defmodule Welcome.PasswordResetController do
   end
 
   def edit(conn, %{"email" => email, "key" => key}) do
-    case Repo.get_by(User, email: email) do
-      nil -> render conn, "new.html"
-      user -> render conn, "edit.html", user: user, email: email, key: key
-    end
+    render conn, "edit.html", email: email, key: key
   end
 
   def update(%Plug.Conn{private: %{openmaize_error: message}} = conn,
-   %{"id" => user, "password_reset" => %{"email" => email, "key" => key}}) do
+   %{"password_reset" => %{"email" => email, "key" => key}}) do
     conn
     |> put_flash(:error, message)
-    |> render("edit.html", user: user, email: email, key: key)
+    |> render("edit.html", email: email, key: key)
   end
   def update(%Plug.Conn{private: %{openmaize_info: message}} = conn, _params) do
     configure_session(conn, drop: true) |> auth_info(message, session_path(conn, :new))
   end
 
-  defp send_token(conn, nil, params, _) do
+  defp send_token(conn, nil, _, _) do
     render conn, "new.html"
   end
   defp send_token(conn, user, user_params, {key, email, link}) do

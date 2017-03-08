@@ -14,12 +14,12 @@ defmodule Welcome.PasswordResetControllerTest do
 
   setup %{conn: conn} do
     conn = conn |> bypass_through(Welcome.Router, :browser) |> get("/")
-    user = add_reset("gladys")
-    {:ok, %{conn: conn, user: user}}
+    add_reset("gladys")
+    {:ok, %{conn: conn}}
   end
 
-  test "reset password succeeds for correct key", %{conn: conn, user: user} do
-    conn = put(conn, password_reset_path(conn, :update, user), password_reset: @valid_attrs)
+  test "reset password succeeds for correct key", %{conn: conn} do
+    conn = put(conn, password_reset_path(conn, :update), password_reset: @valid_attrs)
     assert conn.private.phoenix_flash["info"] =~ "Password reset"
     assert redirected_to(conn) == session_path(conn, :new)
   end
@@ -29,19 +29,13 @@ defmodule Welcome.PasswordResetControllerTest do
     assert conn.private.phoenix_template == "new.html"
   end
 
-  test "edit not shown for invalid email", %{conn: conn} do
-    %{email: email, key: key} = @invalid_email
-    conn = get(conn, password_reset_path(conn, :edit, email: email, key: key))
-    assert conn.private.phoenix_template == "new.html"
-  end
-
-  test "reset password fails for incorrect key", %{conn: conn, user: user} do
-    conn = put(conn, password_reset_path(conn, :update, user), password_reset: @invalid_attrs)
+  test "reset password fails for incorrect key", %{conn: conn} do
+    conn = put(conn, password_reset_path(conn, :update), password_reset: @invalid_attrs)
     assert conn.private.phoenix_flash["error"] =~ "Invalid credentials"
   end
 
-  test "reset password fails for invalid password", %{conn: conn, user: user} do
-    conn = put(conn, password_reset_path(conn, :update, user), password_reset: @invalid_pass)
+  test "reset password fails for invalid password", %{conn: conn} do
+    conn = put(conn, password_reset_path(conn, :update), password_reset: @invalid_pass)
     assert conn.private.phoenix_flash["error"] =~ "Invalid credentials"
   end
 end
