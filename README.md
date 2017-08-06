@@ -1,5 +1,9 @@
 # Welcome
 
+NOTE: if you are using Phoenix 1.3, take a look at
+[Phauxth](https://github.com/riverrun/phauxth), which is designed
+with Phoenix 1.3 in mind and is also a lot more extensible.
+
 Example of using Openmaize authentication library in a Phoenix web application.
 
 ## Example apps
